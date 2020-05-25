@@ -1,0 +1,36 @@
+.div-wrapper> div{
+    height: 100px;
+    width: 70%;
+    box-shadow: 10px 10px 10px 10px grey;
+    margin-top:10vh;
+    margin-left: 12vw;
+    border-top:40px;
+    padding: 10px 30px;
+}
+.NewTodoForm{
+    text-align: center;
+}
+.div-wrapper button{
+    height: 40px;
+    min-width: 15%;
+    width:auto;
+    border-radius: 10px;
+    background-color:darkolivegreen;
+    margin-left:10px;
+}
+.div-wrapper input{
+    height: 30px;
+    width: 50%;
+    border-radius: 10px;
+}
+.list-item-wrapper .button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.list-item-wrapper .complete-container {
+    background-color: darkorange;
+}
+.list-item-wrapper .remove-container{
+    background-color: darkslateblue
+}
