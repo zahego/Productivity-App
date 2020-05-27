@@ -1,12 +1,15 @@
 import React from 'react';
-export const ListItem =({stuffToDo})=>{
+ const ListItem =({itemTodo, onRemovePressedOfLI, onFinishPressedLI})=>{
     return(
         <div className="list-item-wrapper">
-            <h3>{stuffToDo.text}</h3>
+            <h3>{itemTodo.text}</h3>
             <div className="button-container">
-            <button className="complete-container">Mark as Completed</button>
-            <button className="remove-container">Remove</button>
+            {itemTodo.isCompleted?null:<button onClick={()=>onFinishPressedLI(itemTodo.text/*, itemTodo.isCompleted*/)}
+            className="complete-container">Mark as Completed</button>}
+            <button onClick={()=>onRemovePressedOfLI(itemTodo.text)}
+            className="remove-container">Remove</button>
             </div>
         </div>
     )
 }
+export default ListItem;
