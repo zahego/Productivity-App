@@ -1,5 +1,5 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {reduceTodo, isLoadingThatTodo} from './todo/reducers';
+import {reduceTodo} from './todo/reducers';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
@@ -9,7 +9,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 
 //naming of this file is due to the redux naming convention
 //a constant to hold all the reducers that will be defined later on
-const todoReduce ={ reduceTodo, isLoadingThatTodo };
+const todoReduce ={ reduceTodo };
 
 //autoMergeLevel2 tell Redux Persist how to reconcile the initial and stored state of application,
 //as in how deep it should go (level 2)

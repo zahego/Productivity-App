@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {createStuffTodo} from './actions';
+import {thunkCreateThatTodo} from './thunks';
+import { selectorGetReduceTodo} from './selectors';
 
 //props much match the mapStateToProps of reducer
-const NewTodoForm =({reduceTodo, onCreatePressed})=>{
+const NewTodoForm =({reduceTodoCreate, onCreatePressed})=>{
     const [inputForNew, setInputForNEw]=useState('');
     
     return(
@@ -11,7 +13,7 @@ const NewTodoForm =({reduceTodo, onCreatePressed})=>{
         <input className="NewTodoInput" type="text" value={inputForNew} onChange={e=>setInputForNEw(e.target.value)} placeholder="What's the new todo stuff, amigi?"/>
         <button
          onClick={()=>{
-             const isDup=reduceTodo.some(itemintodo=>itemintodo.text===inputForNew);
+             const isDup=reduceTodoCreate.some(itemintodo=>itemintodo.text===inputForNew);
              if(!isDup){
                 onCreatePressed(inputForNew);
                 setInputForNEw('');
@@ -22,10 +24,10 @@ const NewTodoForm =({reduceTodo, onCreatePressed})=>{
     )
 }
 const mapStateToProps = state =>({
-    reduceTodo:state.reduceTodo,
+    reduceTodoCreate:selectorGetReduceTodo(state),
 });
 const mapDispatchToProps = dispatch=>({
-onCreatePressed: addingText=> dispatch(createStuffTodo(addingText)),
+onCreatePressed: addingText=> dispatch(thunkCreateThatTodo(addingText)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewTodoForm);

@@ -12,8 +12,13 @@ import { CREATE_THE_STUFF_TODO,
      LOAD_THE_STUFF_TODO_TRUE_SUCCESS,
      LOAD_THE_STUFF_TODO_PAINFUL_FAILURE} from './actions.js';
 
+//before this, reduceTodo is stored in reduceTodo, isLoadingThatTodo is stored in isLoadingThatTodo
+//now both of it is a part of selectorInitialState. reduceTodo now part of selectorInitialState.todoListHoldingReduceTodo
+//isLoadingThatTodo now part of selectorInitialState.isLoadingThatTodo
+const selectorInitialState={isLoadingThatTodo: false, todoListHoldingReduceTodo: []}
+
 //reducer
-export const isLoadingThatTodo=(state=false, action)=>{
+/*export const isLoadingThatTodo=(state=selectorInitialState, action)=>{
     const {type}=action;
     switch(type){
         case LOAD_THE_STUFF_TODO_WITH_PROGRSSION:{
@@ -28,13 +33,14 @@ export const isLoadingThatTodo=(state=false, action)=>{
         default:
             return state;
     }
-}
+}*/
 //another reducer
-export const reduceTodo= (state =[], action)=>{
+export const reduceTodo= (state =selectorInitialState, action)=>{
     const {type, payload }=action;
 
     switch(type){
-        case CREATE_THE_STUFF_TODO:{
+        //before thunk and server
+        /*case CREATE_THE_STUFF_TODO:{
             const {text}=payload;
             const newStuffWithTextTodo={
                 text,
@@ -43,19 +49,36 @@ export const reduceTodo= (state =[], action)=>{
             //concat doesn't mutate
             return state.concat(newStuffWithTextTodo);
         }
+        
         case REMOVE_THE_STUFF_TODO:{
             const {text}=payload;
             return state.filter(removeTodo=>removeTodo.text!==text);
+        }*/
+        //after thunk and server
+        case CREATE_THE_STUFF_TODO:{
+            const {reduceTodo}=payload;
+            return {...state,
+                todoListHoldingReduceTodo:
+                state.todoListHoldingReduceTodo.concat(reduceTodo)};
+        }
+        case REMOVE_THE_STUFF_TODO:{
+            const {reduceTodo:removeThatTodoStuffPlease}=payload;
+            return {...state,
+                todoListHoldingReduceTodo:
+                state.todoListHoldingReduceTodo.filter(removeTodo=>
+                    removeTodo.id!==removeThatTodoStuffPlease.id)};
         }
         case FINISH_THE_STUFF_TODO:{
-            const {text}=payload;
+            const {reduceTodo:finishThatTodoStuffPlease}=payload;
             //itemTodo in ListItem
-            return state.map(itemTodo=>{
-                if(itemTodo.text===text){
-                    return{...itemTodo, isCompleted: true};
+            return {...state,
+                todoListHoldingReduceTodo: 
+                state.todoListHoldingReduceTodo.map(itemTodo=>{
+                if(itemTodo.id===finishThatTodoStuffPlease.id){
+                    return finishThatTodoStuffPlease;
                 }
                 return itemTodo;
-            })
+            }),};
            /* old clunky but that works
            const {text, isCompleted}=payload;
             
@@ -66,14 +89,16 @@ export const reduceTodo= (state =[], action)=>{
             return state.filter(finishTodo=>finishTodo.text!==text&&finishTodo.isCompleted!==isCompleted).concat(tempStuffTodo);*/
         }
         case LOAD_THE_STUFF_TODO_WITH_PROGRSSION:{
-            return state;
+            return {...state, isLoadingThatTodo:true};
         }
         case LOAD_THE_STUFF_TODO_TRUE_SUCCESS:{
             const {reduceTodo} = payload;
-            return reduceTodo;
+            return {...state,
+                isLoadingThatTodo:false,
+                todoListHoldingReduceTodo:reduceTodo,}
         }
         case LOAD_THE_STUFF_TODO_PAINFUL_FAILURE:{
-            return state;
+            return {...state, isLoadingThatTodo:false};
         }
         
         default:

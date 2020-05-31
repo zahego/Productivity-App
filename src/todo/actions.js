@@ -5,26 +5,35 @@ import { reduceTodo } from "./reducers";
 //action type
 export const CREATE_THE_STUFF_TODO='CREATE_THE_STUFF_TODO';
 //action creator
-export const createStuffTodo=/*someActionText*/text=>({
+//before thunk and server is the same as after
+export const createStuffTodo=reduceTodo=>({
     type:CREATE_THE_STUFF_TODO,
-payload: {/*someActionText*/text}
+payload: {reduceTodo}
 });
 
 //action type
 export const REMOVE_THE_STUFF_TODO='REMOVE_THE_STUFF_TODO';
 //action creator
-export const removeStuffTodo=/*someActionText*/text=>({
+//before thunk and server
+/*export const removeStuffTodo=text=>({
     type:REMOVE_THE_STUFF_TODO,
-    payload: {/*someActionText*/text}
+    payload: {text}
+});*/
+//after thunk and server
+//the item deleted will remain deleted even when the page restart, it will only reset when the server restart
+export const removeStuffTodo=reduceTodo=>({
+    type:REMOVE_THE_STUFF_TODO,
+    payload: {reduceTodo}
 });
+
 
 export const FINISH_THE_STUFF_TODO='FINISH_THE_STUFF_TODO';
 //action creator
-export const finishStuffTodo=/*(text, isCompleted)*/text=>(
+export const finishStuffTodo=/*(text, isCompleted)*/reduceTodo=>(
     /*console.log(isCompleted),*/{
     type:FINISH_THE_STUFF_TODO,
     //payload: {text, isCompleted}
-    payload: {text}
+    payload: {reduceTodo}
 });
 
 export const LOAD_THE_STUFF_TODO_WITH_PROGRSSION='LOAD_THE_STUFF_TODO_WITH_PROGRSSION';
