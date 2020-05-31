@@ -2,14 +2,16 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import ListItem from './ListItem.js';
 import NewTodoForm from './NewTodoForm.js';
+import styled from 'styled-components';
 import {selectorGetIsLoadingThatTodo, 
-    selectorGetReduceTodo,
     reselectGetIncompleteReduceTodo,
     reselectGetCompleteReduceTodo} from './selectors';
 import {removeStuffTodo, finishStuffTodo} from './actions.js';
 import {thunkDisplayAlert, thunkLoadStuffTodo, thunkRemoveThatTodo, thunkFinishThatTodo} from './thunks';
 import './TodoList.css';
 import { isLoadingThatTodo } from './reducers.js';
+
+const DivWrapper=styled.div``;
 
 //props much match the mapStateToProps of reducer
 //becareful of the ({}) misplacement. Wasted 4h for misplacing }

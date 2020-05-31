@@ -1,5 +1,5 @@
 .div-wrapper> div{
-    height: 100px;
+    height: 130px;
     width: 70%;
     box-shadow: 10px 10px 10px 10px grey;
     margin-top:10vh;
@@ -10,7 +10,7 @@
 .NewTodoForm{
     text-align: center;
 }
-.div-wrapper button{
+ button{
     height: 40px;
     min-width: 15%;
     width:auto;
@@ -23,14 +23,14 @@
     width: 50%;
     border-radius: 10px;
 }
-.list-item-wrapper .button-container{
+.button-container{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
-.list-item-wrapper .complete-container {
+.complete-container {
     background-color: darkorange;
 }
-.list-item-wrapper .remove-container{
+.remove-container{
     background-color: darkslateblue
 }
