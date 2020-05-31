@@ -1,18 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-//864000 second=1 day
+//8640000 second=1 day
 //if dateprop is less recent than 5 days from today, highlight it red
+
+//this is best for testing. Also good code practice to put logic inside method for reuse
+export const getBorderDateForTest=(startingdate, currentdate)=>{
+    return(startingdate>new Date(currentdate-8640000*5)
+    ?'none':'3px solid red');
+}
+
 const ListItemWrapper=styled.div`
     
     `;
 const ListItemWrapperWithWarning=styled(ListItemWrapper)`
-    border-bottom: ${dateProps=>(dateProps.todoCreatedDate>new Date(Date.now()-864000*5)
-    ?'none':'3px solid red')};
+    border-bottom: ${dateProps=>getBorderDateForTest(new Date(dateProps.todoCreatedDate), Date.now())};
 `;
  const ListItem =({itemTodo, onRemovePressedOfLI, onFinishPressedLI})=>{
     const CompletedContainer=itemTodo.isCompleted?ListItemWrapper:ListItemWrapperWithWarning;
     return(
-        <CompletedContainer todoCreatedDate={new Date(itemTodo.createdAt)}>
+        <CompletedContainer todoCreatedDate={itemTodo.createdAt}>
             <h3>{itemTodo.text}</h3>
             <p>Created At: &nbsp; 
                 {(new Date(itemTodo.createdAt)).toLocaleDateString()}
