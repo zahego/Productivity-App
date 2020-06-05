@@ -7,13 +7,16 @@ import{loadTheStuffTodoProgress,
     removeStuffTodo,
     finishStuffTodo} from './actions';
 
+const ENDPOINT="https://productivity-app-server.herokuapp.com/";
+
 export const thunkLoadStuffTodo=()=>
 async(dispatch, getState)=>{
     try{
     dispatch(loadTheStuffTodoProgress());
     //the reduceTodo at the end of fetch('http://localhost:8080/reduceTodo') can only be change by entering the server and change it there
     //at server.js in react-ecosystem-server
-    const response =await fetch('http://localhost:8080/reduceTodo');
+    //http://localhost:8080/reduceTodo
+    const response =await fetch(`${ENDPOINT}/reduceTodo`);
     const reduceTodo=await response.json();
 
     dispatch(loadTheStuffTodoTrueSuccess(reduceTodo));
@@ -29,7 +32,7 @@ async dispatch=>{
     try{
         //body is a return props in server.js post method
         const body=JSON.stringify({text});
-        const response =await fetch('http://localhost:8080/reduceTodo/',{
+        const response =await fetch(`${ENDPOINT}/reduceTodo/`,{
             headers:{'Content-Type': 'application/json',},
             method:'post',
             body,});
@@ -48,7 +51,7 @@ export const thunkRemoveThatTodo=id=>
 async dispatch=>{
     try{
         
-        const response =await fetch(`http://localhost:8080/reduceTodo/${id}`,{method:'delete'});
+        const response =await fetch(`${ENDPOINT}/reduceTodo/${id}`,{method:'delete'});
         //removedtodo is in server.js
         const removedTodo=await response.json();
         dispatch(removeStuffTodo(removedTodo));
@@ -61,7 +64,7 @@ async dispatch=>{
 export const thunkFinishThatTodo=id=>
 async dispatch=>{
     try{
-        const response =await fetch(`http://localhost:8080/reduceTodo/${id}/completed`,{ method:'post'});
+        const response =await fetch(`${ENDPOINT}/reduceTodo/${id}/completed`,{ method:'post'});
         //updatedTodo is in server.js
         const updatedTodo=await response.json();
         //remember to change the method here. Almost still keep it as createStuffTodo
