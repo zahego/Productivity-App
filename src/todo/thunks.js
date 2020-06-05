@@ -7,7 +7,7 @@ import{loadTheStuffTodoProgress,
     removeStuffTodo,
     finishStuffTodo} from './actions';
 
-const ENDPOINT="https://productivity-app-server.herokuapp.com/";
+const ENDPOINT="https://productivity-app-server.herokuapp.com";
 
 export const thunkLoadStuffTodo=()=>
 async(dispatch, getState)=>{
@@ -16,7 +16,7 @@ async(dispatch, getState)=>{
     //the reduceTodo at the end of fetch('http://localhost:8080/reduceTodo') can only be change by entering the server and change it there
     //at server.js in react-ecosystem-server
     //http://localhost:8080/reduceTodo
-    const response =await fetch(`${ENDPOINT}reduceTodo`);
+    const response =await fetch(`${ENDPOINT}/reduceTodo`);
     const reduceTodo=await response.json();
 
     dispatch(loadTheStuffTodoTrueSuccess(reduceTodo));
